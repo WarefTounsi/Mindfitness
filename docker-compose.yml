@@ -1,0 +1,28 @@
+version: "3"
+services:
+  client:
+    build: ./client
+    entrypoint: npm start
+    ports:
+      - 3000:3000
+    volumes:
+      - ./client:/usr/src/app
+    networks:
+      - mern-network
+    depends_on:
+      - server
+  server:
+    build: ./server
+    entrypoint: "npm start"
+    ports:
+      - 8800:8800
+    volumes:
+      - ./server:/usr/src/app
+    networks:
+      - mern-network
+networks:
+  mern-network:
+    driver: bridge
+volumes:
+  mongo-data:
+    driver: local
