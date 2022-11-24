@@ -20,6 +20,15 @@ services:
       - ./server:/usr/src/app
     networks:
       - mern-network
+  shopping-servicer:
+    build: ./shopping-cart-api
+    entrypoint: "npm start"
+    ports:
+      - 8288:8288
+    volumes:
+      - ./shopping-cart-api:/usr/src/app
+    networks:
+      - mern-network
 networks:
   mern-network:
     driver: bridge

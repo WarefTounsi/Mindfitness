@@ -1,0 +1,1 @@
+{"session_id":"1121147848345252523","identity_id":"1121147848340822301","link":"https://eventbrite.app.link?%24identity_id=1121147848340822301","data":"{\"+clicked_branch_link\":false,\"+is_first_session\":true}","browser_fingerprint_id":"1053985261333328120","has_app":false}

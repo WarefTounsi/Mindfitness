@@ -1,18 +1,22 @@
 import { Navigation, Autoplay, Pagination, Scrollbar, A11y } from "swiper";
 import React, { useState } from "react";
-import { createReservation } from "../services/Reservation";
+import { createReservation, getReservationListByTrainerId } from "../services/Reservation";
 import SchoolIcon from "@mui/icons-material/School";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import AddBoxIcon from "@mui/icons-material/AddBox";
 import MoveToInboxIcon from "@mui/icons-material/MoveToInbox";
 import ImportContactsIcon from "@mui/icons-material/ImportContacts";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+
 import {
   Alert,
   Snackbar,
   Input,
   FormHelperText,
   CardActions,
-  Rating,
+  Select,
+  MenuItem,
   Box,
   Grid,
   Card,
@@ -50,19 +54,19 @@ import "swiper/css/pagination";
 import useAuth from "../hooks/useAuth";
 import { getItem } from "../services/LocalStorage";
 import { getTrainingByCreator } from "../services/Training";
+import Footer from "../components/Footer";
 
 export default function TrainerTemplate() {
   const location = useParams();
   const [coach, setCoach] = useState(null);
-  const {auth,setAuth} = useAuth();
+  const { auth, setAuth } = useAuth();
   let userId = location.id;
   useEffect(() => {
     getCoachById(userId).then((coach) => {
       setCoach(coach);
-      setAuth(getItem('auth'));
+      setAuth(getItem("auth"));
       console.log(coach);
     });
-    console.log(coach);
   }, []);
   return (
     <>
@@ -103,11 +107,15 @@ export default function TrainerTemplate() {
               <CoursesSection coach={userId} />
             </Grid>
             <Grid item align="center" xs={12}>
-              <ReservationSection trainer={coach?.firstName + " " + coach?.lastName} />
+              <ReservationSection
+                offers={coach?.expertiseFields}
+                trainer={coach?.firstName + " " + coach?.lastName}
+              />
             </Grid>
           </Grid>
         </Container>
       </Box>
+      <Footer></Footer>
     </>
   );
 }
@@ -223,14 +231,14 @@ function CurriclumSection({ skills }) {
     </>
   );
 }
-function CoursesSection({coach}) {
+function CoursesSection({ coach }) {
   const [coursesList, setCoursesList] = useState([]);
 
   useEffect(() => {
     getTrainingByCreator(coach).then((trainings) => {
       console.log(trainings);
-    })   
-  })
+    });
+  });
   const data = [1, 2, 3, 6, 7, 8, 9, 10, 11, 12, 13];
   return (
     <Paper elevation={10} sx={{ paddingX: 5, backgroundColor: "#82C0CC" }}>
@@ -269,31 +277,44 @@ function CoursesSection({coach}) {
     </Paper>
   );
 }
-function ReservationSection({trainer}) {
-  const { auth,setAuth } = useAuth();
+function ReservationSection({ trainer, offers }) {
+  const { auth, setAuth } = useAuth();
   const [openSnackbar, setOpenSnackbar] = useState(false);
+  const [dateAlreadyReserved, setDateAlreadyReserved] = useState([]);
   const currentDate = new Date().toISOString();
   const location = useParams();
   useEffect(() => {
-    setAuth(sessionStorage.getItem('auth'))
-    console.log(auth);
-  },[])
+    getReservationListByTrainerId(location.id).then((data) => {
+      const table = data.map((item) => (new Date(item.date)));
+      setDateAlreadyReserved(table);
+    });
+    setAuth(sessionStorage.getItem("auth"));
+  }, []);
   const [open, setOpen] = useState(false);
   const [subject, setSubject] = useState("");
   const [date, setDate] = useState("");
   const [place, setPlace] = useState("");
   const [duration, setDuration] = useState("");
-
+  const [errorMsg, setErrorMsg] = useState("");
   const handleClickOpen = () => {
     if (!auth) {
       setOpen(true);
     } else {
-      setOpenSnackbar(true)
+      setOpenSnackbar(true);
     }
   };
   const handleClose = () => {
     setOpen(false);
   };
+  const handleDateChoice = (date) => {
+    const d = new Date(date);
+    if (dateAlreadyReserved.includes(d)){
+      setErrorMsg("Date already reserved !")
+    } else {
+      setErrorMsg("")
+      setDate(date)
+    }
+  }
   const handleSubmit = () => {
     createReservation({
       subject,
@@ -302,8 +323,10 @@ function ReservationSection({trainer}) {
       duration,
       trainerId: location.id,
       trainerName: trainer,
-      owner: JSON.parse(sessionStorage.getItem('auth'))?.user
-    }).then((reservation) => {console.log(reservation)})
+      owner: JSON.parse(sessionStorage.getItem("auth"))?.user,
+    }).then((reservation) => {
+      console.log(reservation);
+    });
     setOpen(false);
   };
 
@@ -320,19 +343,23 @@ function ReservationSection({trainer}) {
           Réserver votre première formation maintenant
         </Button>
         <Dialog open={open} onClose={handleClose}>
-          <DialogTitle align="center">Reserve</DialogTitle>
+          <DialogTitle align="center">Reserve Now !</DialogTitle>
           <DialogContent>
-            <DialogContentText m={2} align="center">
-            </DialogContentText>
+            <DialogContentText m={2} align="center"></DialogContentText>
             <Grid container spacing={3}>
               <Grid item xs={12} sm={6}>
                 <FormControl fullWidth={true}>
-                  <InputLabel htmlFor="subjectLabel">Subject</InputLabel>
-                  <Input
+                  <InputLabel>Subject</InputLabel>
+                  <Select
                     value={subject}
+                    required
                     onChange={(e) => setSubject(e.target.value)}
-                    required={true}
-                  />
+                    variant="standard"
+                  >
+                    {offers?.map((item) => (
+                      <MenuItem value={item}>{item}</MenuItem>
+                    ))}
+                  </Select>
                 </FormControl>
               </Grid>
               <Grid item xs={12} sm={6}>
@@ -366,11 +393,12 @@ function ReservationSection({trainer}) {
                   <Input
                     value={date}
                     type="datetime-local"
-                    onChange={(e) => setDate(e.target.value)}
+                    onChange={(e) => handleDateChoice(e.target.value)}
                     id="dateInput"
                     required={true}
                     min={currentDate}
                   />
+                  <FormHelperText variant="outlained" error={true}>{errorMsg}</FormHelperText>
                 </FormControl>
               </Grid>
             </Grid>
@@ -381,13 +409,9 @@ function ReservationSection({trainer}) {
           </DialogActions>
         </Dialog>
       </Box>
-      <Snackbar
-        color="error"
-        open={openSnackbar}
-        autoHideDuration={6000}
-        >
-          <Alert severity="error">"You must Be logged in before" !</Alert>
-        </Snackbar>
+      <Snackbar color="error" open={openSnackbar} autoHideDuration={6000}>
+        <Alert severity="error">"You must Be logged in before" !</Alert>
+      </Snackbar>
     </>
   );
 }
@@ -418,6 +442,7 @@ const BestTraining = (props) => {
         </Card>
       </Paper>
     </Box>
+
   );
 };
 // function Feedbacks() {

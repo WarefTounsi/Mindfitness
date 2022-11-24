@@ -25,7 +25,8 @@ export async function editCoach(coachId, data){
         hourPrice: data.hourPrice,
         phoneNumber: data.phoneNumber,
         socialMediaAccounts: data.socialMediaAccounts,
-        skills: data.skills
+        skills: data.skills,
+        expertiseFields: data.expertiseFields
     })
 
     return response;

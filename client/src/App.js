@@ -23,6 +23,8 @@ import Profile from "./UserPortail/Profile";
 import Panier from "./UserPortail/Panier";
 import Reservation from "./UserPortail/Reservation";
 import Logout from "./components/Logout";
+import PaymentResult from "./components/PaymentResult";
+import { createTheme } from "@mui/material";
 
 function App() {
   const ROLES = {
@@ -51,6 +53,9 @@ function App() {
         <Route path="unauthorized" element={<Unauthorized />} />
         <Route path="training/:id" element={<TrainingTemplate />} />
         <Route path="trainer/:id" element={<TrainerTemplate />} />
+        <Route path="success-payment" element={<PaymentResult type={true} />} />
+        <Route path="failed-payment" element={<PaymentResult type={false} />} />
+
         {/* we want to protect these routes */}
         <Route
           path="trainer-profile"

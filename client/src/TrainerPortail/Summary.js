@@ -26,6 +26,7 @@ export default function Summary() {
   const [password, setPassword] = useState("");
   const [hourPrice, setHourPrice] = useState(0);
   const [skills, setSkills] = useState([]);
+  const [expertiseFields, setExpertiseFields] = useState([]);
   const [severity, setSeverity] = useState("success");
   const [message, setMessage] = useState("");
   useEffect(() => {
@@ -43,7 +44,7 @@ export default function Summary() {
   }, []);
 
   const handleSubmit = () => {
-    console.log(skills);
+    console.log(expertiseFields);
     getCoachByEmail(auth?.auth?.user)
       .then((data) => {
         const socialMediaAccounts = {
@@ -59,13 +60,14 @@ export default function Summary() {
           hourPrice,
           socialMediaAccounts,
           skills,
+          expertiseFields
         });
       })
       .then((response) => {
         if (response.status === 201) {
-          setMessage("Sauvegadée ")
+          setMessage("Sauvegadée ");
         } else {
-          setSeverity('error');
+          setSeverity("error");
           setMessage(" Invalide ");
         }
       });
@@ -219,6 +221,35 @@ export default function Summary() {
                   )}
                 />
               </Grid>
+              <Grid item xs={12} p={4}>
+                <FormControl fullWidth>
+                  <Autocomplete
+                    multiple={true}
+                    id="offers-filled"
+                    options={["Public Speaking","Web Developement","Mobile Development", "Game Development","Adobe XD","Data Science", "Machine Learning"]}
+                    freeSolo
+                    value={expertiseFields}
+                    onChange={(e, value) => setExpertiseFields(value)}
+                    renderTags={(value, getTagProps) =>
+                      value.map((option, index) => (
+                        <Chip
+                          variant="outlined"
+                          label={option}
+                          {...getTagProps({ index })}
+                        />
+                      ))
+                    }
+                    renderInput={(params) => (
+                      <>
+                        <InputLabel htmlFor="fixed">
+                          What I can offer
+                        </InputLabel>
+                        <TextField {...params} variant="standard" />
+                      </>
+                    )}
+                  />
+                </FormControl>
+              </Grid>
             </Grid>
             <Box mt={5} sx={{ display: "flex", justifyContent: "end" }}>
               <Button
@@ -229,7 +260,7 @@ export default function Summary() {
                 Sauvegarder
               </Button>
             </Box>
-            <Box display={message ? 'flex' : 'none'} justifyContent="center">
+            <Box display={message ? "flex" : "none"} justifyContent="center">
               <Alert severity={severity}>{message}</Alert>
             </Box>
           </Box>

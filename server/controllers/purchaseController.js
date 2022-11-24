@@ -7,31 +7,56 @@ exports.getPurchase = function(req,res) {
             res.status(500).send(err.message)
         } else {
             res.status(200).json(basket)
+            console.log(basket)
         }
     })  
 }
 
 exports.addPurchase = function (req, res) {
-    console.log(req.body)
-    const purchase = new Purchase(req.body)
-    purchase.save(function(err,purchase){
-        if (err) {
-            return res.status(500).send(err.message)
+    Purchase.find({purchase : req.body.purchase}, function(err,purchase){
+        if (err){
+            req.status(500).json({message: "There is an error"});
         } else {
-            return res.status(200).json(purchase)
+            if (purchase.length == 0){
+                const purchase = new Purchase(req.body);
+                purchase.save(function(err, purchase){
+                    if (err) {
+                        res.status(500).json({message : "There is an error !"})
+                    } else {
+                        res.status(200).json({message: "Successfully added"});
+                    }
+                })
+            } else {
+                res.status(200).json({message: "Already Added"})
+            }
         }
     })
-
 }
 
 exports.removePurchase = function (req, res) { 
-     purchase.remove({
+     Purchase.remove({
         _id: req.params.id
      },function(err, purchase){
         if (err) {
-            console.log(err)
+            res.status(500).json({message: "There is an error! Be carefull !"})
         } else {
-            res.status(204).json({messsage: 'Purchase successufully deleted'})
+            res.status(204).json({message: 'Purchase successufully deleted'})
         }
      })
+}
+
+exports.getTotal = function (req, res) {
+    console.log({status: 'UNPAID', owner: req.query.username})
+    Purchase.find({status: 'UNPAID', owner: req.query.username}, function(err,purchases){
+        if (err) {
+            res.status(500).json({message: "There is an error! Be carefull !"})
+        } else {
+            let total = 0
+            console.log("Habb",purchases)
+            purchases?.forEach((element) => {
+                total += element?.price
+            })
+            res.status(200).json({total: total})
+        }
+    })
 }

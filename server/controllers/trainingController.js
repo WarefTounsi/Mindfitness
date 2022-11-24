@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const Training = require ('../schema/schemaTraining');
+const User = require('../schema/schemaUser');
 
 //Get Training by id 
 exports.getTrainingById = function (req,res) {
@@ -97,5 +98,15 @@ exports.getTrainingByFilter = function (req, res) {
         } else {
             res.status(200).json(training);
         }
+    })
+}
+
+exports.isMine = function (req,res) {
+    const trainingId = req.params.id;
+    User.find({id : userId}).then((user) => {
+         console.log(user.purchases)
+         res.status(200).json({video_link: "https://www.youtube.com"})
+    }).catch((data) => {
+        
     })
 }

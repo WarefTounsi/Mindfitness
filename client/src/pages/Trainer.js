@@ -10,10 +10,10 @@ import NavBar from "../components/Navbar";
 import Footer from "../components/Footer";
 import Skeleton from "@mui/material/Skeleton";
 import CircularProgress from "@mui/material/CircularProgress";
+import { useParams } from "react-router-dom";
 
 export default function Trainer() {
   const [coachList, setCoachList] = useState([]);
-
   useEffect(() => {
     let mounted = true;
     getCoachList().then((data) => {

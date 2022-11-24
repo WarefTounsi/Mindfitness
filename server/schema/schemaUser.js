@@ -32,10 +32,7 @@ const userSchema = mongoose.Schema(
           role: {
                type: [Number],
           },
-          basket: {
-               type: mongoose.Schema.Types.ObjectId,
-               required: false
-          }
+          purchases: [mongoose.Schema.Types.ObjectId]
      },
      { timestamps: { createdAt: "created_at" } }
 );

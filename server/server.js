@@ -5,7 +5,7 @@ const dotenv = require("dotenv").config();
 const axios = require("axios");
 let multer = require("multer");
 const upload = multer({ dest: "storage/" });
-
+const { createProxyMiddleware } = require('http-proxy-middleware')
 //connect database
 mongoose
      .connect(process.env.DB_CONNECTION_URI)
@@ -55,6 +55,7 @@ const partnerRoutes = require("./routes/partnerRoutes");
 const reservationsRoutes = require("./routes/ReservationRoutes");
 const userRoutes = require("./routes/userRoutes");
 const purchaseRoutes = require("./routes/purchaseRoutes");
+const payment = require("./routes/payment");
 
 app.post(
      "/training",
@@ -94,32 +95,14 @@ partnerRoutes(app);
 reservationsRoutes(app);
 purchaseRoutes(app);
 userRoutes(app);
+payment(app);
 
-app.post("/payment",async function (req, res) {
-  console.log('Works')
-     const request = await axios.post(
-          "https://developers.flouci.com/api/generate_payment",
-          {
-               "app_token": "a5820074-7dae-4e44-8cd7-70d46312bb64",
-               "app_secret": "a5820074-7dae-4e44-8cd7-70d46312bb64",
-               "amount": "350",
-               "accept_card": "true",
-               "session_timeout_secs": "50",
-               "success_link": "www.google.com",
-               "fail_link": "www.google.com",
-               "developer_tracking_id": "",
-          },
-          {
-               headers: { "content-type": "application/json" },
-          }
-     ).catch(err => {console.log(err);});
-     res.status(200).send('SUccess')
-});
 
-const port = 8800;
-app.listen(port, () => {
-     console.log(process.env);
-     console.log(`Listening on port ${port}`);
+// const apiProxy = createProxyMiddleware({target: "https://mindfitness_shopping-servicer_1:8288/", changeOrigin:true});
+// app.get('/payment',apiProxy)
+
+app.listen(process.env.API_PORT, () => {
+     console.log(`Listening on port ${process.env.API_PORT}`);
 });
 
 app.use(

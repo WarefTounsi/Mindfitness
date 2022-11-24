@@ -20,7 +20,7 @@ const trainingSchema = mongoose.Schema(
         },
         category: {
             type: String,
-            enum: ['WEB Development', 'Cloud Computing', 'Mobile Development', 'Machine Learning', 'Deep Learning'],
+            enum: ['WEB Developpment', 'Cloud Computing', 'Mobile Development', 'Machine Learning', 'Deep Learning'],
             required:true 
         },
         description: {

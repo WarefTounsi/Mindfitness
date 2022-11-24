@@ -30,8 +30,8 @@ export const trainingEdit = () => {
                 <FormTab label="summary">
                         <TextInput name='title' source="title" fullWidth />
                         <TextInput name='subTitle' source="subTitle" fullWidth />
-                        <SelectInput source="category" default='Developpment WEB' fullWidth choices={[
-                            { id : 'Developpment WEB', name: 'Developpment WEB'}, 
+                        <SelectInput source="category" default='WEB Developpment' fullWidth choices={[
+                            { id : 'WEB Developpment', name: 'WEB Developpment'}, 
                             { id : 'Cloud Computing', name: 'Cloud Computing'}, 
                             { id : 'Developpement Mobile', name: 'Developpement Mobile'},
                             { id : 'Machine Learning', name: 'Machine Learning'},
@@ -84,8 +84,8 @@ export const trainingCreate = () => {
                 <FormTab label="summary">
                         <TextInput name='title' source="title" fullWidth />
                         <TextInput name='subTitle' source="subTitle" fullWidth />
-                        <SelectInput source="category" default='Developpment WEB' fullWidth choices={[
-                            { id : 'Developpment WEB', name: 'Developpment WEB'}, 
+                        <SelectInput source="category" default='WEB Developpment' fullWidth choices={[
+                            { id : 'WEB Developpment', name: 'WEB Developpment'}, 
                             { id : 'Cloud Computing', name: 'Cloud Computing'}, 
                             { id : 'Developpement Mobile', name: 'Developpement Mobile'},
                             { id : 'Machine Learning', name: 'Machine Learning'},

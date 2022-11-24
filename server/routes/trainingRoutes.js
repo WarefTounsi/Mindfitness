@@ -8,5 +8,7 @@ module.exports = function(app) {
     app.route('/training')
       .post(trainingHandler.createTraining)
     app.route('/training')
-      .get(trainingHandler.getTrainings)    
+      .get(trainingHandler.getTrainings)
+    app.route('/training/:id/is-mine')
+      .post(trainingHandler.isMine)    
 };

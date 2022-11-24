@@ -13,6 +13,8 @@ import {
   DialogContentText,
   DialogTitle,
   Dialog,
+  Snackbar,
+  Alert,
 } from "@mui/material";
 import Typography from "@mui/material/Typography";
 import { Chip, CardMedia, Container, Divider, Rating } from "@mui/material";
@@ -38,10 +40,12 @@ const TrainingTemplate = () => {
   const [training, setTraining] = useState({});
   const [play, setPlay] = useState(false);
   const [open, setOpen] = useState(false);
+  const [msg, setMsg] = useState("");
   const auth = useAuth();
 
   useEffect(() => {
     getTrainingById(trainingId.id).then((training) => {
+      console.log(training);
       setTraining(training);
     });
   }, []);
@@ -52,13 +56,21 @@ const TrainingTemplate = () => {
 
   const handleClose = () => {
     setOpen(false);
-  };  
-    
+  };
+
   const handleConfirm = () => {
-    console.log(trainingId.id)
     const username = JSON.parse(sessionStorage.getItem("auth")).user;
-    console.log(username)
-    addPurchase({trainingId: trainingId.id, username}).then((data) => console.log(data)).catch((error) => console.log(error));
+    console.log(training.addedValue);
+    addPurchase({
+      trainingId: trainingId.id,
+      username,
+      name: training.title,
+      price: training.price,
+      advantages: training.addedValue,
+      image: training.image,
+    })
+      .then((data) => setMsg(data.message))
+      .catch((error) => console.log(error));
     setOpen(false);
   };
 
@@ -97,6 +109,22 @@ const TrainingTemplate = () => {
                 controls={true}
                 url={training?.image}
               ></ReactPlayer>
+            </Grid>
+          </Grid>
+          <Grid container justifyContent="space-between" direction="row">
+            <Grid container item xs={8} justifyContent="flex-start" alignItems="center">
+              {training?.tags?.map((tag) => (
+                <Grid item px={2} >
+                  <Chip
+                    size="medium"
+                    color="warning"
+                    label={tag}
+                    variant="outlined"
+                  />
+                </Grid>
+              ))}
+            </Grid>
+            <Grid item xs={4}>
               <Box
                 sx={{
                   marginTop: 3,
@@ -128,9 +156,12 @@ const TrainingTemplate = () => {
                     Do you really want to add this course to your cart?
                   </DialogTitle>
                   <DialogContent>
-                    <DialogContentText xs={{display:'flex', justifyContent:'center'}} id="alert-dialog-description">
-                        Vous devez Passer à votre espace achats pour continuer
-                        le processus de paiement
+                    <DialogContentText
+                      xs={{ display: "flex", justifyContent: "center" }}
+                      id="alert-dialog-description"
+                    >
+                      Vous devez Passer à votre espace achats pour continuer le
+                      processus de paiement
                     </DialogContentText>
                   </DialogContent>
                   <DialogActions>
@@ -142,18 +173,6 @@ const TrainingTemplate = () => {
                 </Dialog>
               </Box>
             </Grid>
-          </Grid>
-          <Grid container justifyContent="flex-start" direction="row">
-            {training?.tags?.map((tag) => (
-              <Grid key={tag} item p={2}>
-                <Chip
-                  size="medium"
-                  color="secondary"
-                  label={tag}
-                  variant="outlined"
-                />
-              </Grid>
-            ))}
           </Grid>
         </Container>
       </Box>
@@ -227,6 +246,11 @@ const TrainingTemplate = () => {
           </Grid>
         </Grid>
       </Container>
+      <Snackbar open={msg !== ""} autoHideDuration={5}>
+        <Alert severity={msg == "Already Added" ? "warning" : "success"}>
+          {msg}
+        </Alert>
+      </Snackbar>
       <Footer />
     </>
   );

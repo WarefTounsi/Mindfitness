@@ -1,22 +1,36 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import App from './App';
+import React from "react";
+import ReactDOM from "react-dom/client";
+import App from "./App";
 import "./style.scss";
 
 import "bootstrap/dist/js/bootstrap.min.js";
-import reportWebVitals from './reportWebVitals';
-import { AuthProvider } from './context/AuthProvider';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import reportWebVitals from "./reportWebVitals";
+import { AuthProvider } from "./context/AuthProvider";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { ThemeProvider } from "react-admin";
+import { createTheme } from "@mui/material";
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+
+//u can provide anu theme you choose
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: "#FFFFFF"
+    }
+  }
+})
+
+const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     <BrowserRouter>
-      <AuthProvider>
+      <ThemeProvider>
+        <AuthProvider>
           <Routes>
             <Route path="/*" element={<App />} />
           </Routes>
-      </AuthProvider>
+        </AuthProvider>
+      </ThemeProvider>
     </BrowserRouter>
   </React.StrictMode>
 );

@@ -48,6 +48,7 @@ const coachSchema = mongoose.Schema({
           min: 20000000,
           max: 99999999,
      },
+     expertiseFields: [String],
      socialMediaAccounts: {
           type: Object
      },

@@ -10,10 +10,10 @@ import { useEffect } from "react";
 import { IconButton } from "@mui/material";
 import ShoppingBasketIcon from "@mui/icons-material/ShoppingBasket";
 import { useNavigate } from "react-router-dom";
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 
 export default function NavBar() {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const { auth } = useAuth();
   const [isLogged, setIsLogged] = useState(false);
 
@@ -100,7 +100,14 @@ export default function NavBar() {
           >
             Logout
           </Button>
-          <AccountCircleIcon fontSize="large" onClick={() => {navigate("/user-profile")}}/>
+          <IconButton color="secondary" >
+            <AccountCircleIcon
+              fontSize="large"
+              onClick={() => {
+                navigate("/user-profile");
+              }}
+            />
+          </IconButton>
         </nav>
       </Toolbar>
     </AppBar>

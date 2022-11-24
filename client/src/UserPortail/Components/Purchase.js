@@ -11,46 +11,28 @@ import {
 import CloseIcon from "@mui/icons-material/Close";
 import CardHeader from "@mui/material/CardHeader";
 
-
-const Purchase = () => {
+const Purchase = ({removeMe, id, name, price, image, advantages}) => {
     return (
         <Card sx={{ marginTop:2, display: "flex", justifyContent: "space-between" }}>
               <CardContent>
                 <CardHeader
-                  title="452,00 DT"
+                  title={price + " DT"}
                   titleTypographyProps={{ variant: "h4" }}
                 />
-                <Typography ml={2} variant="h6">
-                  {" "}
-                  Cloud Computing
+                <Typography my={2} ml={2} variant="h6">
+                  {name}
                 </Typography>
-                {/* <List>
-                  <ListItem>
-                    <ListItemIcon children={<PlaylistAddCheckCircleIcon />} />
-                    <ListItemText>Chapter1</ListItemText>
-                  </ListItem>
-                  <ListItem>
-                    <ListItemIcon children={<PlaylistAddCheckCircleIcon />} />
-                    <ListItemText>Chapter1</ListItemText>
-                  </ListItem>
-                  <ListItem>
-                    <ListItemIcon children={<PlaylistAddCheckCircleIcon />} />
-                    <ListItemText>Chapter1</ListItemText>
-                  </ListItem>
-                </List> */}
                 <Box display="flex" justifyContent="space-evenly">
-                  <Chip label="Add Value1" />
-                  <Chip label="Add Value1" />
-                  <Chip label="Add Value1" />
+                  {advantages.map((advantage,index) => (<Chip key={index} sx={{marginX:1}} label={advantage} />))}
                 </Box>
               </CardContent>
               <CardMedia
                 sx={{ width: "40%" }}
                 component="div"
-                image="https://picsum.photos/seed/picsum/300/200"
+                image={image}
               >
                 <Box display='flex' justifyContent="flex-end">
-                  <IconButton color='error'>
+                  <IconButton onClick={() => removeMe(id)} color='error'>
                     <CloseIcon />
                   </IconButton>
                 </Box>

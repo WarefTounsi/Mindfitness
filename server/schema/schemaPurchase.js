@@ -8,6 +8,28 @@ const purchaseSchema = mongoose.Schema({
           type: String,
           required: true,
      },
+     name: {
+          type: String,
+          required: true,
+     },
+     price: {
+          type: Number,
+          required: true,    
+     },
+     advantages: [String],
+     image:{
+          type:String,
+          required: true
+     },
+     status: {
+          type: String,
+          enum: ["PAID", "UNPAID"],
+          default: "UNPAID"
+     },
+     paymentId: {
+          type: String,
+          default: ""
+     }
 });
 
 purchaseSchema.plugin(idPlugin);

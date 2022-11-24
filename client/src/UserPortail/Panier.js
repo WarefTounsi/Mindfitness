@@ -9,24 +9,40 @@ import {
   CardContent,
   CardActionArea,
   Button,
+  Snackbar,
+  Alert
 } from "@mui/material";
 import CardHeader from "@mui/material/CardHeader";
 import Purchase from "./Components/Purchase";
 import { useState, useEffect } from "react";
-import { getPurchase } from "../services/Purchase";
+import { deletePurchase, getPurchase, getTotal } from "../services/Purchase";
 import useAuth from "../hooks/useAuth";
 import { getTrainingById } from "../services/Training";
+import axios from "axios";
+import { makePayment } from "../services/Service";
+import { getItem } from "../services/LocalStorage";
 
 const Panier = () => {
   const [purchases, setPurchases] = useState([]);
+  const [total,setTotal] = useState(0);
   const authData = useAuth();
+  const [open, setOpen] = useState(false);
+  
+  const handleRemovePurchase = (id) => {
+    deletePurchase(id).then((success) => setOpen(true)).catch((err) => console.log(err))
+  }
 
   useEffect(() => {
-    console.log(authData.auth.user)
-    getPurchase({owner: authData.auth.user}).then((purchases) => {console.log(purchases);return purchases.forEach((item) => getTrainingById(item.purchase))}).then((training) => console.log(training)).catch(err => console.log(err));
-    setPurchases([1,2,3])
-  },[])
+    getPurchase({owner: authData.auth.user}).then((purchases) => {setPurchases(purchases)});
+    getTotal(authData.auth.user).then((data) => {setTotal(data.total)}).catch((err) => console.log(err));
+  },[open])
 
+  const handlePayment =  () => {
+    makePayment(total,authData.auth.user).then((data) => {
+      window.location.href = data.result.link;
+      console.log(data);
+    console.log(data)}).catch((err) => console.log(err)); 
+  }
   return (
     <Box>
       <Paper sx={{backgroundColor:'#745FEA', padding: 5 }}>
@@ -35,7 +51,7 @@ const Panier = () => {
       <Paper sx={{ marginTop: 3 }}>
         <Grid p={2} container>
           <Grid item xs={7}>
-            {purchases.map(() => <Purchase />)}
+            {purchases?.map((purchase) => (<Purchase removeMe={handleRemovePurchase} key={purchase?.id} id={purchase?.id} name={purchase?.name} image={purchase?.image} price={purchase?.price} advantages={purchase?.advantages} />))}
           </Grid>
           <Grid item ml={10} xs={4}>
             <Card>
@@ -44,7 +60,7 @@ const Panier = () => {
               <CardContent>
                 <Box display="flex" justifyContent="space-evenly">
                   <Typography variant="h6">Sub Total</Typography>
-                  <Typography variant="h6">362 DT</Typography>
+                  <Typography variant="h6">{total} DT</Typography>
                 </Box>
               </CardContent>
               <CardActionArea
@@ -55,7 +71,7 @@ const Panier = () => {
                   display: "flex",
                 }}
               >
-                <Button fullWidth variant="contained">
+                <Button onClick={handlePayment} fullWidth variant="contained">
                   Payer en un click
                 </Button>
               </CardActionArea>
@@ -68,6 +84,11 @@ const Panier = () => {
                 </Box>
               </CardContent>
             </Card>
+            <Snackbar open={open} autoHideDuration="6000" >
+              <Alert severity="success" sx={{width:'100%'}}>
+                successfully deleted !
+              </Alert>
+            </Snackbar>
           </Grid>
         </Grid>
       </Paper>

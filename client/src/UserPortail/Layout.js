@@ -24,9 +24,8 @@ import SummarizeIcon from "@mui/icons-material/Summarize";
 import BorderColorIcon from "@mui/icons-material/BorderColor";
 import Copyright from "../components/Copyright";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-import ShoppingBasketIcon from "@mui/icons-material/ShoppingBasket";
 import { useEffect } from "react";
-
+import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 const drawerWidth = 240;
 
 const AppBar = styled(MuiAppBar, {
@@ -61,11 +60,11 @@ const Drawer = styled(MuiDrawer, {
     boxSizing: "border-box",
     ...(!open && {
       overflowX: "hidden",
+      width: theme.spacing(7),
       transition: theme.transitions.create("width", {
         easing: theme.transitions.easing.sharp,
         duration: theme.transitions.duration.leavingScreen,
       }),
-      width: theme.spacing(7),
       [theme.breakpoints.up("sm")]: {
         width: theme.spacing(9),
       },
@@ -168,13 +167,13 @@ function DashboardContent() {
                   variant="subtitle1"
                   underline="none"
                 >
-                  Mes Reservations
+                  Reservations
                 </Link>
               </ListItemText>
             </ListItem>
             <ListItem>
               <ListItemIcon>
-                <ShoppingBasketIcon color="primary" />
+                <AddShoppingCartIcon color="primary" />
               </ListItemIcon>
               <ListItemText>
                 <Link
@@ -183,7 +182,7 @@ function DashboardContent() {
                   variant="subtitle1"
                   underline="none"
                 >
-                  Basket
+                  Shopping Cart
                 </Link>
               </ListItemText>
             </ListItem>
@@ -191,7 +190,7 @@ function DashboardContent() {
           </List>
           <Box display='flex' justifyContent='center' m={5}>
             <Button color='warning' variant="contained">
-              <Link href="/">Home</Link>
+              <Link underline="none" href="/">Home</Link>
             </Button>
           </Box>
         </Drawer>
