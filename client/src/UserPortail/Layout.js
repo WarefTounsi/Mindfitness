@@ -108,7 +108,7 @@ function DashboardContent() {
             >
               <MenuIcon />
             </IconButton>
-            <Avatar />
+            <Avatar color="secondary" />
             <Typography
               ml={5}
               component="h1"

@@ -34,18 +34,32 @@ import { getTrainingById } from "../services/Training";
 import AutoStoriesIcon from "@mui/icons-material/AutoStories";
 import { addPurchase } from "../services/Purchase";
 import useAuth from "../hooks/useAuth";
+import { isMine } from "../services/Training";
+
+function  getContentOfCourse (id,owner){
+  return isMine(id,owner);
+}
+
+
 
 const TrainingTemplate = () => {
+
   const trainingId = useParams();
   const [training, setTraining] = useState({});
   const [play, setPlay] = useState(false);
   const [open, setOpen] = useState(false);
+  const [trainingContent, setTrainingContent] = useState([]);
   const [msg, setMsg] = useState("");
   const auth = useAuth();
 
   useEffect(() => {
+      if(sessionStorage.getItem("auth")){
+        getContentOfCourse(trainingId.id,JSON.parse(sessionStorage.getItem("auth")).user).then((data) => setTrainingContent(data)).catch((err) => {console.log(err)})
+      }
+  },[]);
+
+  useEffect(() => {
     getTrainingById(trainingId.id).then((training) => {
-      console.log(training);
       setTraining(training);
     });
   }, []);
@@ -196,7 +210,7 @@ const TrainingTemplate = () => {
                   </AccordionSummary>
                   <AccordionDetails>
                     <Typography>{element.chapterDescription}</Typography>
-                    <ReactPlayer playing={true} controls={true} url="" />
+                    <ReactPlayer playing={true} controls={true} url={trainingContent[element.chapterTitle]} />
                   </AccordionDetails>
                 </Accordion>
               ))}

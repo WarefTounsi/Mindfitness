@@ -10,5 +10,5 @@ module.exports = function(app) {
     app.route('/training')
       .get(trainingHandler.getTrainings)
     app.route('/training/:id/is-mine')
-      .post(trainingHandler.isMine)    
+      .get(trainingHandler.isMine)    
 };

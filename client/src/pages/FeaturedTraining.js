@@ -8,8 +8,11 @@ import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import { Chip } from "@mui/material";
 import ReactPlayer from "react-player";
+import { isMine } from "../services/Training";
+
 
 function FeaturedTraining(props) {
+  
   return (
     <CardActionArea component="a" href={'training/' + props.id}>
       <Card sx={{ display: props.type }}>

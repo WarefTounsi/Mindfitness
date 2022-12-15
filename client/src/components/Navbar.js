@@ -104,7 +104,20 @@ export default function NavBar() {
             <AccountCircleIcon
               fontSize="large"
               onClick={() => {
-                navigate("/user-profile");
+                let role = JSON.parse(sessionStorage.getItem('auth'))['roles'][0];
+                switch (role) {
+                  case 1:
+                    navigate('/admin');
+                    break;
+                  case 2 :
+                    navigate('/trainer-profile');
+                    break;
+                  case 3:
+                    navigate('/user-profile');
+                    break;
+                  default:
+                    break;
+                }
               }}
             />
           </IconButton>

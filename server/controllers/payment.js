@@ -45,11 +45,12 @@ module.exports = {
           axios.get(url, {
                headers
           }).then((response) => {
-                    if (response.data.result.success) {
+                    console.log(response.data);
+                    if (response.data.result.status = "SUCCESS") {
                          Purchase.updateMany(
                               { paymentId: id_payment },
                               { $set: { status: "PAID" } }
-                         ).then((info) => console.log("ee",info)).catch((err) => console.log(err))
+                         ).then((info) => console.log(info)).catch((err) => console.log(err))
                     }
                     res.status(200).json({result: "true"})
                })

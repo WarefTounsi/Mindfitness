@@ -40,7 +40,6 @@ const Panier = () => {
   const handlePayment =  () => {
     makePayment(total,authData.auth.user).then((data) => {
       window.location.href = data.result.link;
-      console.log(data);
     console.log(data)}).catch((err) => console.log(err)); 
   }
   return (

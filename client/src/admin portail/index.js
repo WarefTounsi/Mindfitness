@@ -5,6 +5,7 @@ import {
   Resource,
   EditGuesser,
   ShowGuesser,
+  Link,
 } from "react-admin";
 import { CreateButton } from "react-admin";
 import restProvider from "ra-data-simple-rest";
@@ -21,6 +22,7 @@ import myDataProvider from "./AdminDataProvider";
 import ForwardToInboxIcon from "@mui/icons-material/ForwardToInbox";
 import { partnerIcon, partnerCreate, partnerList } from "./partners";
 import { userIcon, userList } from "./users";
+import { NavLink } from "react-router-dom";
 
 export default function AdminPortail() {
   const dataProvider = myDataProvider;

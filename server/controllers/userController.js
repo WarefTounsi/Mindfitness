@@ -13,6 +13,16 @@ exports.getAllUsers = function (req, res) {
      });
 };
 
+exports.updateUser = async function (req, res) {
+     User.findOneAndUpdate({ id: req.params }, function (err, user) {
+          if (err) {
+               console.log(user);
+          } else {
+               console.log(user);
+          }
+     });
+};
+
 exports.deleteUser = function (req, res) {
      User.remove(
           {
@@ -21,15 +31,22 @@ exports.deleteUser = function (req, res) {
           function (err, user) {
                if (err) {
                     res.status(404).json({
-                         error: { errors: 
-                                 [{ domain: 'global',
-                                    reason: 'notFound',
-                                    message: 'Not Found', 
-                                    description: 'Couldn\'t find the requested userId \'' + req.params.id + '\''
-                                  }],
-                                 err,
-                                 code: 404 }
-                     });
+                         error: {
+                              errors: [
+                                   {
+                                        domain: "global",
+                                        reason: "notFound",
+                                        message: "Not Found",
+                                        description:
+                                             "Couldn't find the requested userId '" +
+                                             req.params.id +
+                                             "'",
+                                   },
+                              ],
+                              err,
+                              code: 404,
+                         },
+                    });
                } else {
                     res.status(201).json({
                          message: "User successfully deleted",

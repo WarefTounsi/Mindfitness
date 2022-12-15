@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const Purchase = require("../schema/schemaPurchase");
 
 exports.getPurchase = function(req,res) {
+    req.query['status'] = 'UNPAID'; 
     Purchase.find(req.query, function(err, basket) {
         if (err) {
             res.status(500).send(err.message)
@@ -52,7 +53,6 @@ exports.getTotal = function (req, res) {
             res.status(500).json({message: "There is an error! Be carefull !"})
         } else {
             let total = 0
-            console.log("Habb",purchases)
             purchases?.forEach((element) => {
                 total += element?.price
             })

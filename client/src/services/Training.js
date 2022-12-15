@@ -7,7 +7,7 @@ export async function getTrainingList() {
 }
 
 export async function getTrainingById(id) {
-  const response = await axios.get("/training/" + id);
+  const response = await axios.get(`/training/${id}`);
   const training = await response.data;
   return training;
 }
@@ -20,6 +20,12 @@ export async function getTrainingByCreator(creatorId) {
   });
   const courses = await response.data;
   return courses;
+}
+
+export async function isMine(id,owner){
+  const response = await axios.get(`/training/${id}/is-mine`,{params: {owner}});
+  const data = await response.data;
+  return data;
 }
 
 export async function getBestTrainingList() {
