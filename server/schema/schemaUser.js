@@ -9,14 +9,16 @@ const userSchema = mongoose.Schema(
           firstName: {
                type: String,
                required: false,
-               lowercase: true,
+               lowercase: false,
                trim: true,
+               default: ""
           },
           lastName: {
                type: String,
                required: false,
-               lowercase: true,
+               lowercase: false,
                trim: true,
+               default: ""
           },
           email: {
                type: String,
@@ -42,7 +44,7 @@ userSchema.methods = {
           return passwordHash.verify(password, this.password);
      },
      getToken: function () {
-          return jwt.encode(this, config.secret);
+          return jwt.encode(this, process.env.JWT_SECRET);
      },
 };
 

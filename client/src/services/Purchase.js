@@ -1,4 +1,7 @@
 import axios from "axios";
+import interceptor from "../utils/interceptor";
+
+// interceptor(axios);
 
 export async function addPurchase({trainingId, username,name,price,advantages,image}) {
     const response = await axios.post('/purchase',{

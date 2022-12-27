@@ -27,6 +27,7 @@ export async function getReservationListByTrainerIdAndStatus(id, status) {
     const data = await response.data;
     return data;
 }
+
 export async function changeStatus(id, _status){
     const response = await axios.put(`/reservation/${id}`,{
         status: _status

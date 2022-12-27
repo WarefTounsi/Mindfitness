@@ -154,6 +154,8 @@ exports.isMine = function (req, res) {
           });
 };
 
+
+
 const getContentOfTraining = async (id) => {
      const training = await Training.findById(id);
      return training;

@@ -37,19 +37,21 @@ export default function SignUp() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      let data = { firstName, lastName, password, email };
+      const data = { firstName, lastName, password, email };
       data["role"] = [3];
       const response = await axios.post(REGISTER_URL, JSON.stringify(data), {
         headers: { "Content-Type": "application/json" },
       });
-      console.log(JSON.stringify(response?.data));
-      const roles = response?.data?.roles;
+      const roles = response?.data?.role;
       const accessToken = response?.data?.token;
-      setAuth({ email, password, roles, accessToken });
+      setAuth({ user:email, password, roles, accessToken });
       setPassword("");
       setEmail("");
-      sessionStorage.setItem("auth", JSON.stringify({ email, password, roles, accessToken }))
-      navigate('/user-profile', {replace: true});
+      sessionStorage.setItem(
+        "auth",
+        JSON.stringify({ user:email, password, roles, accessToken })
+      );
+      navigate("/user-profile", { replace: true });
     } catch (e) {}
   };
 

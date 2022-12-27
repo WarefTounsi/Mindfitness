@@ -1,23 +1,23 @@
 const Reservation = require("../schema/schemaReservation");
+const Coach = require("../schema/schemaCoach");
 const { sendMail } = require("../external/mailer");
+const { TemplateReservation } = require("../external/template");
 
 exports.addReservation = function (req, res) {
-     let reservation = new Reservation(req.body);
-     reservation.save(function (err, reservation) {
-          if (err) {
-               return res.status(500).send(err);
-          } else {
-               //send notification to coach by email
-
-               // let messageTest = sendMail({
-               //      sender: "client@mindfitness.tn",
-               //      receiver: "coach@mindfitness.tn",
-               //      subject: "coaching reservation",
-               //      content: "<div>Information</div>",
-               // });
-               return res.status(200).json(reservation);
-          }
-     });
+     const reservation = new Reservation(req.body);
+     reservation
+          .save()
+          .then((reservation) => {
+               res.status(200).json(reservation);
+               return Coach.findById(reservation.trainerId);
+          })
+          .then((trainer) => {
+               const messageTest = sendMail({
+                    receiver: trainer.email,
+                    subject: "coaching reservation",
+                    content: TemplateReservation(),
+               });
+          }).catch((error) => {res.status(200).send(error.message)});
 };
 
 exports.getReservation = function (req, res) {
@@ -46,12 +46,6 @@ exports.editReservation = function (req, res) {
                     return res.status(500).send(err);
                } else {
                     res.status(200).json(reservation);
-                    // let messageTest = sendMail({
-                    //      sender: "client@mindfitness.tn",
-                    //      receiver: "coach@mindfitness.tn",
-                    //      subject: "coaching reservation",
-                    //      content: "<div>Information</div>",
-                    // });
                }
           }
      );

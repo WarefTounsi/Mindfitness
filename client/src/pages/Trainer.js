@@ -72,20 +72,6 @@ export default function Trainer() {
                 );
               })
             )}
-            {coachList?.map((item) => {
-              return (
-                <Grid item className="px-2" xs={4}>
-                  <TrainerCard
-                    key={item.id}
-                    firstName={item.firstName}
-                    lastName={item.lastName}
-                    description={item.description}
-                    picture={item.picture}
-                    coachId={item.id}
-                  />
-                </Grid>
-              );
-            })}
           </Grid>
           <Grid xs={3}>
             <BestTrainer />

@@ -3,7 +3,7 @@ const User = require("../schema/schemaUser");
 
 exports.getAllUsers = function (req, res) {
      res.setHeader("X-Total-Count", 5);
-     const filters = req.params;
+     const filters = req.query;
      User.find(filters, function (err, users) {
           if (err) {
                res.status(404).send(err);
@@ -14,11 +14,11 @@ exports.getAllUsers = function (req, res) {
 };
 
 exports.updateUser = async function (req, res) {
-     User.findOneAndUpdate({ id: req.params }, function (err, user) {
+     User.findOneAndUpdate(req.query ,req.body,{new:false}, function (err, user) {
           if (err) {
-               console.log(user);
+               res.status(500).send("There is an error");
           } else {
-               console.log(user);
+               res.status(200).send(user);
           }
      });
 };
