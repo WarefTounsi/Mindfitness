@@ -3,28 +3,35 @@ const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const dotenv = require("dotenv").config();
 
-//connect database
+//Importing routes
+const coachRoutes = require("./routes/coachRoutes");
+const trainingRoutes = require("./routes/trainingRoutes");
+const contactRoutes = require("./routes/contactRoutes");
+const partnerRoutes = require("./routes/partnerRoutes");
+const reservationsRoutes = require("./routes/ReservationRoutes");
+const userRoutes = require("./routes/userRoutes");
+const purchaseRoutes = require("./routes/purchaseRoutes");
+const payment = require("./routes/payment");
+
+//Connect To Database
 mongoose
      .connect(process.env.DB_CONNECTION_URI)
      .then(() => console.log("Connected to mongoDB"))
-     .catch((e) => {
-          console.log("error connecting to mongoDB");
-          console.log(e);
-     });
+     .catch((e) => console.log("error connecting to mongoDB"));
 
-//let's definite our api object
+//Define Our API Object
 const app = express();
 
-//bodyParser
+//Configure Our API
 const urlencodedParser = bodyParser.urlencoded({
      extended: true,
      limit: "50mb",
 });
+
 app.use(urlencodedParser);
 app.use(bodyParser.json({ limit: "50mb" }));
 app.use(express.static("storage"));
 
-//Définition des CORS
 app.use(function (req, res, next) {
      res.setHeader(
           "Access-Control-Allow-Headers",
@@ -40,20 +47,7 @@ app.use(function (req, res, next) {
      next();
 });
 
-//router Definition
-const router = express.Router();
-
-//Importing route
-const coachRoutes = require("./routes/coachRoutes");
-const trainingRoutes = require("./routes/trainingRoutes");
-const contactRoutes = require("./routes/contactRoutes");
-const partnerRoutes = require("./routes/partnerRoutes");
-const reservationsRoutes = require("./routes/ReservationRoutes");
-const userRoutes = require("./routes/userRoutes");
-const purchaseRoutes = require("./routes/purchaseRoutes");
-const payment = require("./routes/payment");
-
-//Register Route
+//Routers Definition
 coachRoutes(app);
 trainingRoutes(app);
 contactRoutes(app);
@@ -63,10 +57,12 @@ purchaseRoutes(app);
 userRoutes(app);
 payment(app);
 
+//Start Our API
 app.listen(process.env.API_PORT, () => {
      console.log(`Listening on port ${process.env.API_PORT}`);
 });
 
+//Check Our API
 app.use(
      "/health",
      require("express-healthcheck")({
@@ -76,4 +72,3 @@ app.use(
      })
 );
 
-app.use("/api", router);

@@ -44,7 +44,7 @@ userSchema.methods = {
           return passwordHash.verify(password, this.password);
      },
      getToken: function () {
-          return jwt.encode(this, config.secret);
+          return jwt.encode(this, process.env.JWT_SECRET);
      },
 };
 

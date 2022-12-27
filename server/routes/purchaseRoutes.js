@@ -1,4 +1,5 @@
 const purchaseHandler = require("../controllers/purchaseController");
+const auth = require("../middleware/auth");
 
 module.exports = function (app) {
      app.route("/purchase").get(purchaseHandler.getPurchase).post(purchaseHandler.addPurchase);

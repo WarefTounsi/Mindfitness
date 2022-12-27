@@ -2,6 +2,7 @@ const trainingHandler = require("../controllers/trainingController");
 const { FileHandler } = require("../utils/FileHandler");
 const multer = require("multer");
 const upload = multer({ dest: "storage/" });
+
 module.exports = function (app) {
      app.route("/training/:id")
           .get(trainingHandler.getTrainingById)

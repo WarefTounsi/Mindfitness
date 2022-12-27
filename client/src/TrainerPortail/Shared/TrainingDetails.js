@@ -118,7 +118,7 @@ const TrainingDetails = ({ handleValidate }) => {
           id="tags-filled"
           options={[]}
           freeSolo
-          value={[]}
+          value={tags}
           onChange={(event, value) => setTags(value)}
           renderTags={(value, getTagProps) =>
             value.map((option, index) => (

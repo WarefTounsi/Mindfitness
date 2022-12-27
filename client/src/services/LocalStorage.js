@@ -1,3 +1,6 @@
+function getAuth() {
+    return JSON.parse(sessionStorage.getItem('auth'));
+}
 export function removeItem(itemToRemove) {
     window.localStorage.removeItem(itemToRemove);
 }
@@ -11,6 +14,11 @@ export function setItem(localStorageName, item) {
 }
 
 export const getUserEmail = () => {
-    const object = JSON.parse(sessionStorage.getItem('auth'));
-    return object['user'];
+    const auth = getAuth();
+    return auth['user'];
+}
+
+export const getToken = () => {
+    const auth = getAuth();
+    return auth['accessToken'];
 }
