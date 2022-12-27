@@ -26,6 +26,8 @@ import Copyright from "../components/Copyright";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { useEffect } from "react";
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
+import { getUserByEmail } from "../services/user";
+import { getUserEmail } from "../services/LocalStorage";
 const drawerWidth = 240;
 
 const AppBar = styled(MuiAppBar, {
@@ -76,6 +78,7 @@ const mdTheme = createTheme();
 
 function DashboardContent() {
   const [open, setOpen] = React.useState(true);
+  const [name, setName] = React.useState("");
   const navigate = useNavigate();
   const location = useLocation();
   const toggleDrawer = () => {
@@ -85,6 +88,10 @@ function DashboardContent() {
     if (location.pathname == "/user-profile") {
       navigate("profile");
     }
+    getUserByEmail(getUserEmail()).then((user) => {
+      console.log(user);
+        setName(`${user[0]?.firstName} ${user[0]?.lastName}`);
+    })
   }, []);
   return (
     <ThemeProvider theme={mdTheme}>
@@ -116,8 +123,8 @@ function DashboardContent() {
               color="inherit"
               noWrap
               sx={{ flexGrow: 1 }}
-            >
-              Habib Jlejla
+        >
+              {name}
             </Typography>
             <IconButton color="inherit">
               <Badge badgeContent={4} color="secondary">

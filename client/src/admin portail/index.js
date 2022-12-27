@@ -14,24 +14,25 @@ import { AdminLayout } from "./AdminLayout";
 import { coachCreate, coachIcon, coachList, coachEdit } from "./coachs";
 import {
   trainingCreate,
-  trainingList,
+  TrainingList,
   trainingEdit,
   trainingIcon,
 } from "./trainings";
-import myDataProvider from "./AdminDataProvider";
+import MyDataProvider from "./AdminDataProvider";
 import ForwardToInboxIcon from "@mui/icons-material/ForwardToInbox";
 import { partnerIcon, partnerCreate, partnerList } from "./partners";
 import { userIcon, userList } from "./users";
 import { NavLink } from "react-router-dom";
+import { Dashboard } from "./dashboard";
 
 export default function AdminPortail() {
-  const dataProvider = myDataProvider;
+  const dataProvider = MyDataProvider;
 
   return (
     <Admin
-      title="mindFitness Dashboard"
       basename="/admin"
       dataProvider={dataProvider}
+      dashboard={Dashboard}
     >
       <Resource name="user" list={userList} icon={userIcon} />
       <Resource
@@ -44,7 +45,7 @@ export default function AdminPortail() {
       />
       <Resource
         name="training"
-        list={trainingList}
+        list={TrainingList}
         edit={trainingEdit}
         create={trainingCreate}
         icon={trainingIcon}

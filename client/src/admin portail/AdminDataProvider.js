@@ -13,7 +13,7 @@ const httpClient = (url, options = {}) => {
   }
   return fetchUtils.fetchJson(url, options);
 };
-const myDataProvider = {
+const MyDataProvider = {
   ...dataProvider,
   create: (resource, params) => {
     switch (resource) {
@@ -80,7 +80,7 @@ const myDataProvider = {
       default:
         return dataProvider.create(resource, params);
     }
-  } 
+  }
 };
 
 /**
@@ -97,4 +97,4 @@ const convertFileToBase64 = (file) => {
   });
 };
 
-export default myDataProvider;
+export default MyDataProvider;

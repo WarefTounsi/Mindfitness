@@ -9,3 +9,8 @@ export function getItem(item) {
 export function setItem(localStorageName, item) {
     window.localStorage.setItem(localStorageName, JSON.stringify(item));
 }
+
+export const getUserEmail = () => {
+    const object = JSON.parse(sessionStorage.getItem('auth'));
+    return object['user'];
+}

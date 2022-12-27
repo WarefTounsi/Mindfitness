@@ -2,10 +2,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const dotenv = require("dotenv").config();
-const axios = require("axios");
-let multer = require("multer");
-const upload = multer({ dest: "storage/" });
-const { createProxyMiddleware } = require('http-proxy-middleware')
+
 //connect database
 mongoose
      .connect(process.env.DB_CONNECTION_URI)
@@ -14,7 +11,6 @@ mongoose
           console.log("error connecting to mongoDB");
           console.log(e);
      });
-console.log(process.env.DB_CONNECTION);
 
 //let's definite our api object
 const app = express();
@@ -57,36 +53,6 @@ const userRoutes = require("./routes/userRoutes");
 const purchaseRoutes = require("./routes/purchaseRoutes");
 const payment = require("./routes/payment");
 
-app.post(
-     "/training",
-     upload.fields([
-          { name: "image", maxCount: 1 },
-          { name: "ressources", maxCount: 10 },
-          { name: "video", maxCount: 1 },
-     ]),
-     function (req, res, next) {
-          console.log(req.body);
-          console.log(req.files);
-          req.body.image =
-               "http://localhost:8800/" + req.files.image[0].filename;
-          req.body.content = [];
-          for (let i = 0; i < req.body.chaptersTitles.length; i++) {
-               console.log({
-                    chapterTitle: req.body.chaptersTitles[i],
-                    chapterDescription: req.body.chaptersDescriptions[i],
-                    file: req.files.ressources[i].path,
-               });
-               req.body.content.push({
-                    chapterTitle: req.body.chaptersTitles[i],
-                    chapterDescription: req.body.chaptersDescriptions[i],
-                    file: req.files.ressources[i].path,
-               });
-          }
-          console.log(req.body);
-          next();
-     }
-);
-
 //Register Route
 coachRoutes(app);
 trainingRoutes(app);
@@ -96,10 +62,6 @@ reservationsRoutes(app);
 purchaseRoutes(app);
 userRoutes(app);
 payment(app);
-
-
-// const apiProxy = createProxyMiddleware({target: "https://mindfitness_shopping-servicer_1:8288/", changeOrigin:true});
-// app.get('/payment',apiProxy)
 
 app.listen(process.env.API_PORT, () => {
      console.log(`Listening on port ${process.env.API_PORT}`);

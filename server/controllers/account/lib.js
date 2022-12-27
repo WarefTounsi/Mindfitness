@@ -2,7 +2,7 @@ const User = require("../../schema/schemaUser.js");
 const passwordHash = require("password-hash");
 
 exports.signUp = async function (req, res) {
-     const { password, email, role } = req.body;
+     const {firstName, lastName, password, email, role } = req.body;
      if (!email || !password || !role) {
           //le cas ou l'email ou le mot de passe ne serait pas soumit ou nul
           return res.status(400).json({
@@ -12,6 +12,8 @@ exports.signUp = async function (req, res) {
 
      //création de l'objet User dans lequel on hash le mot de passe
      const user = {
+          firstName,
+          lastName,
           email,
           password: passwordHash.generate(password),
           role,
