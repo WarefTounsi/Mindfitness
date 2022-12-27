@@ -2,7 +2,7 @@
   "name": "client",
   "version": "0.1.0",
   "private": true,
-  "proxy": "http://mindfitness_server_1:8800",
+  "proxy": "http://localhost:8800",
   "dependencies": {
     "@emotion/cache": "11.4.0",
     "@emotion/styled": "11.3.0",

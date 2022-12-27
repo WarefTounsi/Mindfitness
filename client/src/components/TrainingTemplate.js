@@ -210,7 +210,7 @@ const TrainingTemplate = () => {
                   </AccordionSummary>
                   <AccordionDetails>
                     <Typography>{element.chapterDescription}</Typography>
-                    <ReactPlayer playing={true} controls={true} url={trainingContent[element.chapterTitle]} />
+                    <ReactPlayer playing={true} controls={true} url={`http://localhost:8800/${trainingContent[element.chapterTitle]}` }/>
                   </AccordionDetails>
                 </Accordion>
               ))}
