@@ -10,7 +10,7 @@ exports.FileHandler = (req,res,next) => {
          req.body.content.push({
               chapterTitle: req.body.chaptersTitles[i],
               chapterDescription: req.body.chaptersDescriptions[i],
-              file: req.files.ressources[i].path,
+              file:"http://localhost:8800/"+ req.files.ressources[i].filename,
          });
     }
     next();    

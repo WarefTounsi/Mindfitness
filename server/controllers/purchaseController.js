@@ -14,25 +14,13 @@ exports.getPurchase = function(req,res) {
 }
 
 exports.addPurchase = function (req, res) {
-    Purchase.find({purchase : req.body.purchase}, function(err,purchase){
-        if (err){
-            req.status(500).json({message: "There is an error"});
-        } else {
-            if (purchase.length == 0){
-                const purchase = new Purchase(req.body);
-                purchase.save(function(err, purchase){
-                    if (err) {
-                        res.status(500).json({message : "There is an error !"})
-                    } else {
-                        res.status(200).json({message: "Successfully added"});
-                    }
-                })
-            } else {
-                res.status(200).json({message: "Already Added"})
+    Purchase.find({purchase : req.body.purchase, owner: req.body.owner}, function(err,purchase){
+            if (err){
+                req.status(500).json({message: "There is an error"});
             }
-        }
-    })
-}
+        })
+    }
+    
 
 exports.removePurchase = function (req, res) { 
      Purchase.remove({
