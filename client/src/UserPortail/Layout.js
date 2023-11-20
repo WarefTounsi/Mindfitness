@@ -25,9 +25,11 @@ import BorderColorIcon from "@mui/icons-material/BorderColor";
 import Copyright from "../components/Copyright";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { useEffect } from "react";
-import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
+import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
+import ChatIcon from "@mui/icons-material/Chat";
 import { getUserByEmail } from "../services/user";
 import { getUserEmail } from "../services/LocalStorage";
+import { io } from "socket.io-client";
 const drawerWidth = 240;
 
 const AppBar = styled(MuiAppBar, {
@@ -89,18 +91,31 @@ function DashboardContent() {
       navigate("profile");
     }
     getUserByEmail(getUserEmail()).then((user) => {
-      console.log(user);
-        setName(`${user[0]?.firstName} ${user[0]?.lastName}`);
-    })
+      setName(`${user[0]?.firstName} ${user[0]?.lastName}`);
+    });
   }, []);
+
+  // ...
+
+  // ...
+
+  // ...
+
   return (
     <ThemeProvider theme={mdTheme}>
-      <Box sx={{ display: "flex" }}>
+      <Box
+        sx={{
+          display: "flex",
+          backgroundColor: "#f8f8f8", // Light background color
+          color: "#333", // Font color
+          fontFamily: "'Helvetica Neue', Arial, sans-serif", // Clean sans-serif font
+        }}
+      >
         <CssBaseline />
         <AppBar position="absolute" open={open}>
           <Toolbar
             sx={{
-              pr: "24px", // keep right padding when drawer closed
+              pr: "24px",
             }}
           >
             <IconButton
@@ -117,18 +132,22 @@ function DashboardContent() {
             </IconButton>
             <Avatar color="secondary" />
             <Typography
-              ml={5}
+              ml={2}
               component="h1"
               variant="h6"
               color="inherit"
               noWrap
-              sx={{ flexGrow: 1 }}
-        >
+              sx={{
+                flexGrow: 1,
+                fontSize: "1.2rem", // Font size
+              }}
+            >
               {name}
             </Typography>
             <IconButton color="inherit">
               <Badge badgeContent={4} color="secondary">
-                <NotificationsIcon />
+                {/* Replace with your own icon */}
+                <div>Icon</div>
               </Badge>
             </IconButton>
           </Toolbar>
@@ -148,58 +167,91 @@ function DashboardContent() {
           </Toolbar>
           <Divider />
           <List component="nav">
-            <ListItem>
+            {/* List items with Apple-style minimalistic design */}
+            <ListItem
+              sx={{
+                "&:hover": {
+                  backgroundColor: "#e5e5e5", // Lighter background color on hover
+                },
+              }}
+            >
               <ListItemIcon>
-                <AccountCircleIcon color="primary" />
+                <AccountCircleIcon />
               </ListItemIcon>
               <ListItemText>
-                <Link
-                  component="a"
+                <a
                   href="/user-profile/profile"
-                  variant="subtitle1"
-                  underline="none"
+                  style={{ textDecoration: "none", color: "inherit" }}
                 >
                   Profile
-                </Link>
+                </a>
               </ListItemText>
             </ListItem>
-            <ListItem>
+
+            <ListItem
+              sx={{
+                "&:hover": {
+                  backgroundColor: "#e5e5e5",
+                },
+              }}
+            >
               <ListItemIcon>
-                <CalendarMonthIcon color="primary" />
+                <ChatIcon />
               </ListItemIcon>
               <ListItemText>
-                <Link
-                  component="a"
-                  href="/user-profile/reservation"
-                  variant="subtitle1"
-                  underline="none"
+                <a
+                  href="/user-profile/chat"
+                  style={{ textDecoration: "none", color: "inherit" }}
                 >
-                  Reservations
-                </Link>
+                  Chat
+                </a>
               </ListItemText>
             </ListItem>
-            <ListItem>
+
+            <ListItem
+              sx={{
+                "&:hover": {
+                  backgroundColor: "#e5e5e5",
+                },
+              }}
+            >
               <ListItemIcon>
-                <AddShoppingCartIcon color="primary" />
+                <AddShoppingCartIcon />
               </ListItemIcon>
               <ListItemText>
-                <Link
-                  component="a"
+                <a
                   href="/user-profile/panier"
-                  variant="subtitle1"
-                  underline="none"
+                  style={{ textDecoration: "none", color: "inherit" }}
                 >
                   Shopping Cart
-                </Link>
+                </a>
               </ListItemText>
             </ListItem>
+
+            <ListItem
+              sx={{
+                "&:hover": {
+                  backgroundColor: "#e5e5e5",
+                },
+              }}
+            >
+              <ListItemIcon>
+                <CalendarMonthIcon />
+              </ListItemIcon>
+              <ListItemText>
+                <a
+                  href="/user-profile/reservation"
+                  style={{ textDecoration: "none", color: "inherit" }}
+                >
+                  Reservation
+                </a>
+              </ListItemText>
+            </ListItem>
+
+            {/* Add more items as needed */}
+
             <Divider sx={{ my: 1 }} />
           </List>
-          <Box display='flex' justifyContent='center' m={5}>
-            <Button color='warning' variant="contained">
-              <Link underline="none" href="/">Home</Link>
-            </Button>
-          </Box>
         </Drawer>
         <Box
           component="main"
@@ -215,8 +267,7 @@ function DashboardContent() {
         >
           <Toolbar />
           <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
-            <Outlet></Outlet>
-            <Copyright sx={{ pt: 4 }} />
+            <Outlet />
           </Container>
         </Box>
       </Box>

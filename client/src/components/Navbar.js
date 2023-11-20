@@ -20,7 +20,6 @@ export default function NavBar() {
   useEffect(() => {
     if (JSON.parse(sessionStorage.getItem("auth"))?.user) {
       setIsLogged(true);
-      console.log(isLogged);
     }
   }, []);
 
@@ -101,10 +100,10 @@ export default function NavBar() {
             Logout
           </Button>
           <IconButton color="secondary" >
-            <AccountCircleIcon
+            { isLogged && <AccountCircleIcon
               fontSize="large"
               onClick={() => {
-                let role = JSON.parse(sessionStorage.getItem('auth'))['roles'][0];
+                let role = JSON.parse(sessionStorage.getItem('auth'))['roles'][0] ;
                 switch (role) {
                   case 1:
                     navigate('/admin');
@@ -118,8 +117,8 @@ export default function NavBar() {
                   default:
                     break;
                 }
-              }}
-            />
+              }} 
+            /> }
           </IconButton>
         </nav>
       </Toolbar>

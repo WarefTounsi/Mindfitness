@@ -30,9 +30,7 @@ const MyDataProvider = {
         data["tags"].forEach((tag) => {
           formData.append("tags", tag);
         });
-        console.log(data);
         data["prerequisties"]?.forEach((element) => {
-          console.log(element.item);
           formData.append("prerequisites", element.item);
         });
         data["addedValue"]?.forEach((element) => {

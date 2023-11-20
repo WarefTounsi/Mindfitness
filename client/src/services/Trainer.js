@@ -1,7 +1,9 @@
 import axios from "axios";
 
 export  async function getCoachList() {
-    let reponse = await axios.get('/coach')
+    // Specify the role id for the coach 
+    //You should get the list of users with the specificed coach id 
+    let reponse = await axios.get('/user?role=2')
     let coachList = await reponse.data;
     return coachList;    
 }

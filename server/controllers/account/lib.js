@@ -39,6 +39,9 @@ exports.signUp = async function (req, res) {
                text: "Succès",
                token: userObject.getToken(),
                role: userObject.role,
+               firstName: userObject.firstName,
+               lastName: userObject.lastName,
+               id: userObject.id,
           });
      } catch (error) {
           console.log(error)
@@ -68,6 +71,9 @@ exports.signIn = async function (req, res) {
                token: findUser.getToken(),
                text: "Authentification réussi",
                role: findUser.role,
+               id:findUser.id,
+               firstName:findUser.firstName,
+               lastName:findUser.lastName
           });
      } catch (error) {
           return res.status(500).json({

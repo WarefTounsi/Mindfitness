@@ -201,6 +201,21 @@ function DashboardContent() {
             </ListItem>
             <ListItem>
               <ListItemIcon>
+                <BorderColorIcon color="primary" />
+              </ListItemIcon>
+              <ListItemText xs={{ fontSize: "10rem" }}>
+                <Link
+                  component="a"
+                  href="/user-profile/chat"
+                  variant="subtitle1"
+                  underline="none"
+                >
+                  Chat
+                </Link>
+              </ListItemText>
+            </ListItem>
+            <ListItem>
+              <ListItemIcon>
                 <SummarizeIcon color="primary" />
               </ListItemIcon>
               <ListItemText xs={{ fontSize: "10rem" }}>

@@ -28,18 +28,18 @@ export default function Trainer() {
     <>
       <NavBar />
       <Container>
-        <Grid xs={12} py={5}>
+        <Grid container xs={12} py={5}>
           <Box p={4}>
             <Typography align="center" variant="h3">
               <span className="border-bottom border-5 border-danger">
-                Explore Our Coachs
+                Explore Our Coaches
               </span>
             </Typography>
           </Box>
         </Grid>
-        <Grid xs={12} py={5}>
+        <Grid container xs={12} py={5}>
           <HeroSection
-            description="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
+            description="Discover a diverse group of experienced coaches dedicated to guiding you on your journey to physical and mental well-being. Our coaches bring a wealth of knowledge and passion to help you achieve your fitness goals. Get ready to embark on a transformative experience with our team of expert trainers."
             imagePath="trainer_logo.png"
           />
         </Grid>
@@ -52,16 +52,15 @@ export default function Trainer() {
             direction="row"
             columnSpacing={{ xs: 5, sm: 2, md: 3 }}
           >
-            {coachList.length == 0 ? (
-              <Box sx={{display: 'flex', justifyContent: 'center'}} >
-                <CircularProgress  color="primary" size={100} />
+            {coachList.length === 0 ? (
+              <Box sx={{ display: "flex", justifyContent: "center" }}>
+                <CircularProgress color="primary" size={100} />
               </Box>
             ) : (
               coachList.map((item) => {
                 return (
-                  <Grid item className="px-2" xs={4}>
+                  <Grid item className="px-2" xs={4} key={item.id}>
                     <TrainerCard
-                      key={item.id}
                       firstName={item.firstName}
                       lastName={item.lastName}
                       description={item.description}

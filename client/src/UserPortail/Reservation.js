@@ -19,30 +19,22 @@ export default function Reservation() {
   const [reservationList, setReservationList] = useState([]);
   useEffect(() => {
     let username = JSON.parse(sessionStorage.getItem("auth")).user;
-    console.log(username);
     getUserReservations({ owner: username }).then((list) => {
-      const reservationTable = list.map(reservation => {
+      const reservationTable = list.map((reservation) => {
         let date = new Date(reservation.date);
-        reservation.date = date.toDateString() + " - " + date.toLocaleTimeString();
-        return reservation
-      })
-      setReservationList(reservationTable)
-  });
+        reservation.date =
+          date.toDateString() + " - " + date.toLocaleTimeString();
+        return reservation;
+      });
+      setReservationList(reservationTable);
+    });
     console.log(reservationList);
   }, []);
   return (
     <Box>
-      <Paper
-        sx={{
-          marginBottom: 5,
-          backgroundColor:'#745FEA',
-          padding: 5,
-          display: "flex",
-          justifyContent: "center",
-        }}
-      >
-        <Typography variant="h2">My Reservations</Typography>
-      </Paper>
+      <Typography variant="h3" sx={{ color: "#354f52", marginBottom: 3 }}>
+        My Reservations
+      </Typography>
       <Paper>
         <Grid p={2} container spacing={2}>
           {reservationList?.map((reservation) => (
@@ -51,7 +43,7 @@ export default function Reservation() {
                 <CardContent>
                   <Box display="flex" justifyContent="space-between">
                     <Chip
-                      label={reservation.duration + ' hours'}
+                      label={reservation.duration + " hours"}
                       color="primary"
                       variant="contained"
                     />
@@ -75,8 +67,7 @@ export default function Reservation() {
                       href={"/trainer/" + reservation?.trainerId}
                     >
                       <Typography variant="h6">
-                      {reservation?.trainerName}
-
+                        {reservation?.trainerName}
                       </Typography>
                     </Link>
                   </Box>

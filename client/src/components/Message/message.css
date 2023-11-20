@@ -1,0 +1,21 @@
+.message-box.left {
+    background-color: black;
+    color: #f1f1f1;
+    font-size: 13px;
+    left: 0;
+    width:fit-content;
+  }
+  .message-box.left > p {
+    margin: 0 !important;
+  }
+  .message-box.right > p {
+    margin: 0 !important;
+  }
+  .message-box.right {
+    background-color: #f1f1f1;
+    color: black;
+    font-size: 13px;
+    width:fit-content;
+  float:right;
+  align-self: flex-end;
+  }

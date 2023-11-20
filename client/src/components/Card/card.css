@@ -1,0 +1,61 @@
+.conv-card {
+    height: 80px;
+    background: white;
+    display: flex;
+    align-items: center;
+    backdrop-filter: blur(10px);
+    transition:1s ease;
+    padding:0px 15px 0px 0px;
+    border-radius:8px;
+    box-shadow:6px 6px 12px #f1f1f1, 1px 1px 10px rgba(255, 255, 255, 0.6);
+  }
+  
+  .conv-card:hover {
+    cursor: pointer;
+    transform: scale(1.03);
+  }
+  
+  .img {
+    width: 50px;
+    height: 50px;
+    margin-left: 10px;
+    border-radius: 100%;
+    background: #f1f1f1;
+  }
+  
+  .conv-card:hover > .img {
+    transition: 0.5s ease-in-out;
+  }
+  
+  .textBox {
+    width: calc(100% - 90px);
+    margin-left: 10px;
+    color: black;
+    font-family: 'Poppins' sans-serif;
+  }
+  
+  .textContent {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap:35px;
+  }
+  
+  .span {
+    font-size: 10px;
+    white-space: nowrap;
+  }
+  
+  .textContent > .h1 {
+    font-size: 16px;
+    font-weight: bold;
+    white-space: nowrap;
+  }
+  
+  .p {
+    font-size: 12px;
+    font-weight: lighter;
+  }
+  
+  
+  

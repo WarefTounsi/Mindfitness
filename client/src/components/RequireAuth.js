@@ -10,7 +10,6 @@ const RequireAuth = ({ allowedRoles }) => {
   const { auth, setAuth } = useAuth();
   useEffect(() => {
     setAuth(JSON.parse(sessionStorage.getItem('auth')));
-    console.log(auth)
   },[])  
   const location = useLocation();
 

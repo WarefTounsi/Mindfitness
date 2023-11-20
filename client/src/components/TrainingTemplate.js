@@ -74,7 +74,6 @@ const TrainingTemplate = () => {
 
   const handleConfirm = () => {
     const username = JSON.parse(sessionStorage.getItem("auth")).user;
-    console.log(training.addedValue);
     addPurchase({
       trainingId: trainingId.id,
       username,

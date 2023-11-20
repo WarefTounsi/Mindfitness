@@ -14,7 +14,24 @@ exports.getAllUsers = function (req, res) {
 };
 
 exports.updateUser = async function (req, res) {
-     User.findOneAndUpdate(req.query ,req.body,{new:false}, function (err, user) {
+     User.findOneAndUpdate(
+          req.query,
+          req.body,
+          { new: false },
+          function (err, user) {
+               if (err) {
+                    res.status(500).send("There is an error");
+               } else {
+                    res.status(200).send(user);
+               }
+          }
+     );
+};
+
+exports.getUser = async function (req, res) {
+     const userId = req.params.userId;
+
+     User.findById(userId, { new: false }, function (err, user) {
           if (err) {
                res.status(500).send("There is an error");
           } else {

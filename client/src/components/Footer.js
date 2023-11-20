@@ -6,9 +6,9 @@ import { Container } from '@mui/system';
 const Footer = () => {
     
     return (
-    <Box mcomponent="footer" sx={{ bgcolor: '#1976d2', py:2 }}>
+    <Box mcomponent="footer" sx={{ bgcolor: '#F8F4E8', py:2 }}>
       <Container maxWidth="lg">
-        <Typography color='#FFF' variant="h6" align="center" gutterBottom>
+        <Typography color='#000000' variant="h6" align="center" gutterBottom>
           MindFitness
         </Typography>
         <Typography
@@ -17,7 +17,7 @@ const Footer = () => {
           color="text.secondary"
           component="p"
         >
-          Something here to give the footer a purpose!
+          Serving calmness since 2020
         </Typography>
         <Copyright />
       </Container>

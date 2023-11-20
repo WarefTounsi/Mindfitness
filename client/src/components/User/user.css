@@ -1,0 +1,55 @@
+.user-card {
+    width: 120px;
+    height: 190px;
+    background: white;
+    box-shadow:6px 6px 12px #f1f1f1, 1px 1px 10px rgba(255, 255, 255, 0.6);
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+    transition-duration: .5s;
+  }
+  
+  .profileImage {
+    padding-top:10px;
+    background: #f1f1f1;
+    width: 50px;
+    height: 50px;
+    border-radius: 100%;
+  }
+  
+  .textContainer {
+    width: 100%;
+    text-align: left;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .name {
+    font-size: 0.9em;
+    font-weight: 600;
+    color: black;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+  }
+  
+  .profile {
+    font-size: 0.84em;
+    background:  #f1f1f1;
+    letter-spacing: 0.2px;
+    border:none;
+    padding:4px;
+    border-radius:8px;
+    color:#333;
+    cursor:pointer;
+  }
+  .profile:hover{
+    cursor: pointer;
+    transform: scale(1.05);
+    transition:1s all;
+  }
+  
+ 

@@ -13,6 +13,7 @@ import Blog from "./pages/Blog";
 import ContactUs from "./pages/ContactUs";
 import Trainer from "./pages/Trainer";
 import Training from "./pages/Training";
+import Chat from "./pages/Chat/Chat"
 import TrainingTemplate from "./components/TrainingTemplate";
 import TrainerTemplate from "./pages/TrainerTemplate";
 import { TrainerCalendar } from "./TrainerPortail/Calendar";
@@ -74,6 +75,8 @@ function App() {
           <Route path="reservation" element={<Reservation />} />
           <Route path="profile" element={<Profile />} />
           <Route path="panier" element={<Panier />} />
+          <Route path="chat" element={<Chat />} />
+
         </Route>
         {/* catch all */}
         <Route path="/*" element={<Missing />} />

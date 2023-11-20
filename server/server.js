@@ -2,7 +2,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const dotenv = require("dotenv").config();
-
+const cors = require('cors')
 //Importing routes
 const coachRoutes = require("./routes/coachRoutes");
 const trainingRoutes = require("./routes/trainingRoutes");
@@ -12,7 +12,8 @@ const reservationsRoutes = require("./routes/ReservationRoutes");
 const userRoutes = require("./routes/userRoutes");
 const purchaseRoutes = require("./routes/purchaseRoutes");
 const payment = require("./routes/payment");
-
+const messages = require('./routes/messageRoutes');
+const conversations = require('./routes/conversationRoutes')
 //Connect To Database
 mongoose
      .connect(process.env.DB_CONNECTION_URI)
@@ -31,7 +32,9 @@ const urlencodedParser = bodyParser.urlencoded({
 app.use(urlencodedParser);
 app.use(bodyParser.json({ limit: "50mb" }));
 app.use(express.static("storage"));
-
+app.use(cors({
+     origin:"*"
+}))
 app.use(function (req, res, next) {
      res.setHeader(
           "Access-Control-Allow-Headers",
@@ -56,6 +59,8 @@ reservationsRoutes(app);
 purchaseRoutes(app);
 userRoutes(app);
 payment(app);
+conversations(app)
+messages(app)
 
 //Start Our API
 app.listen(process.env.API_PORT, () => {

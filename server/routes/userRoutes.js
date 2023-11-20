@@ -6,5 +6,6 @@ module.exports = function(app) {
     app.route('/user/register').post(authHandler.signUp);
     app.route('/user').get(userHandler.getAllUsers);
     app.route('/user/:id').delete(userHandler.deleteUser);
+    app.route('/user/:id').get(userHandler.getUser);
     app.route('/user').put(userHandler.updateUser);
 }

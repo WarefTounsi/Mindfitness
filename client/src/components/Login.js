@@ -43,7 +43,6 @@ export default function SignIn() {
   const [user, setUser] = useState("");
   const [pwd, setPwd] = useState("");
   const [errMsg, setErrMsg] = useState("");
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -55,19 +54,20 @@ export default function SignIn() {
           withCredentials: true,
         }
       );
-      console.log(JSON.stringify(response?.data));
       const accessToken = response?.data?.token;
       const roles = response?.data?.role;
-      setAuth({ user, pwd, roles, accessToken });
+      const id = response?.data?.id
+      const firstName = response?.data?.firstName
+      const lastName = response?.data?.lastName
+      setAuth({ user, pwd, roles, accessToken , id,firstName,lastName });
       sessionStorage.setItem(
         "auth",
-        JSON.stringify({ user, pwd, roles, accessToken })
+        JSON.stringify({ user, pwd, roles, accessToken, id , firstName,lastName })
       );
       setUser("");
       setPwd("");
       navigate(from, { replace: true });
     } catch (err) {
-      console.log(err);
       if (!err?.response) {
         setErrMsg("No Server Response");
       } else if (err.response?.status === 400) {
@@ -77,7 +77,7 @@ export default function SignIn() {
       } else {
         setErrMsg("Login Failed");
       }
-      errRef.current.focus();
+      errRef?.current?.focus();
     }
   };
 
